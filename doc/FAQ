@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.18 2002-06-19 01:17:48 eagle Exp $
+$Id: FAQ,v 1.19 2002-06-22 04:23:37 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -518,7 +518,7 @@ are very welcome.
 Subject: 3.1. INN won't start after a new installation
 
 The most common cause of this problem is that inndstart isn't setuid root.
-inndstart must be installed owned by root and group news, mode 4750.  The
+inndstart must be installed owned by root and group news, mode 4550.  The
 ls -l output for inndstart should look something like:
 
 -r-sr-x---   1 root     news        53768 Jan  8 00:47 inndstart*
