@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.37 2003-03-21 21:08:08 eagle Exp $
+$Id: FAQ,v 1.38 2003-05-05 18:20:22 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1020,6 +1020,9 @@ articles older than artcutoff in inn.conf):
 You may also want to set xrefslave to true in inn.conf and then restart
 INN on the new server if you want to keep the same article numbers as you
 had on the old server.
+
+Next, make sure that the old server is listed in incoming.conf of the new
+server, and reload incoming.conf with ctlinnd to pick up that change.
 
 Then try these commands (a variation on commands posted by Katsuhiro
 Kondou to inn-workers) on the old server:
