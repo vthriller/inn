@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.14 2001-10-05 00:27:47 eagle Exp $
+$Id: FAQ,v 1.15 2002-03-28 21:01:01 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -774,7 +774,7 @@ Then try these commands (a variation on commands posted by Katsuhiro
 Kondou to inn-workers) on the old server:
 
     cd pathdb
-    perl -ne '($a,$b,$_) = split " "; print if $_' history \
+    perl -ne 'chomp; ($a,$b,$_) = split " "; print "$_\n" if $_' history \
         | tr . / > pathoutgoing/list
     innxmit server list
 
