@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.7 2001-02-24 02:57:04 eagle Exp $
+$Id: FAQ,v 1.8 2001-03-07 22:53:48 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -71,6 +71,7 @@ Subject: Contents
 
 5.  Problems on Specific Operating Systems
     5.1.  Can't get INN to compile on SCO OpenServer
+    5.2.  Using raw devices on Solaris destroys the partition table
 
 ------------------------------
 
@@ -910,3 +911,26 @@ before building or LD_LIBRARY_PATH before running any binaries so that
 they can find the Perl libraries.  (The former is preferred, since then
 the path is encoded into the binaries and you don't have to remember to
 set LD_LIBRARY_PATH later.)
+
+------------------------------
+
+Subject: 5.2. Using raw devices on Solaris destroys the partition table
+
+If you use slice 2, or some other disk slice that includes the entire
+disk, under Solaris as a raw partition for CNFS, you may run into this
+problem.  The symptoms are that INN manages to initialize the cycbuffs
+just fine, but then gets invalid device errors when it tries to open them
+again, and the disks show up in format as needing to be repartitioned.
+
+The solution is to not use raw devices that include the first cylinder of
+the disk.  Solaris doesn't protect the superblock from being overwritten
+by an application writing to raw devices and includes it in the first
+cylinder of the disk, so unless you use a slice that starts with cylinder
+1 instead of 0, INN will invalidate the partition table when it tries to
+initialize the cycbuff and all further accesses will fail until you
+repartition.
+
+Generally all that has to be done is to repartition the disk with slice 0
+starting from cylinder 1 and extending to the end of the disk and then
+point INN at slice 0 instead of slice 2.  You lose some small amount of
+space, but generally not enough to care about.
