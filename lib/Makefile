@@ -2,7 +2,6 @@
 SHELL	= /bin/sh
 MAKE	= make
 IFTRUE	= @$(SHELL) ../iftrue.sh
-NOPATCH	= 'rm dbz.c ; echo Cannot apply patch ; exit 1'
 
 ##  =()<P	= @<P>@>()=
 P	= 
@@ -39,8 +38,6 @@ RANLIB	= ranlib
 ##  See the rule for version.o, below.
 OSXATTOBJ= version.o memchr.o memcmp.o memcpy.o memset.o strchr.o strrchr.o
 
-##  =()<DBZDIR	= @<DBZDIR>@>()=
-DBZDIR	= ../dbz
 ##  =()<MISSING_SRC = @<MISSING_SRC>@>()=
 MISSING_SRC = 
 ##  =()<MISSING_OBJ = @<MISSING_OBJ>@>()=
@@ -50,18 +47,18 @@ SOURCES = $(MISSING_SRC) \
 	checkart.c cleanfrom.c clientactive.c clientlib.c closeonexec.c \
 	dbz.c defdist.c findheader.c genid.c getconfig.c getdtab.c \
 	getfqdn.c getmodaddr.c gettime.c inndcomm.c innvers.c localopen.c \
-	lockfile.c nonblocking.c parsedate.c perl.c qio.c radix32.c readin.c \
-	remopen.c resource.c sendarticle.c sendpass.c tempname.c \
-	waitnb.c wildmat.c \
-	xfopena.c xmalloc.c xmemerr.c xrealloc.c xwrite.c xwritev.c
+	lockfile.c md5.c nonblocking.c parsedate.c perl.c qio.c radix32.c \
+	readin.c remopen.c resource.c sendarticle.c sendpass.c tempname.c \
+	waitnb.c wildmat.c xfopena.c xmalloc.c xmemerr.c xrealloc.c xwrite.c \
+	xwritev.c
 OBJECTS = $(MISSING_OBJ) \
 	checkart.o cleanfrom.o clientactive.o clientlib.o closeonexec.o \
 	dbz.o defdist.o findheader.o genid.o getconfig.o getdtab.o \
 	getfqdn.o getmodaddr.o gettime.o inndcomm.o innvers.o localopen.o \
-	lockfile.o nonblocking.o parsedate.o perl.o qio.o radix32.o readin.o \
-	remopen.o resource.o sendarticle.o sendpass.o tempname.o \
-	waitnb.o wildmat.o \
-	xfopena.o xmalloc.o xmemerr.o xrealloc.o xwrite.o xwritev.o
+	lockfile.o md5.o nonblocking.o parsedate.o perl.o qio.o radix32.o \
+	readin.o remopen.o resource.o sendarticle.o sendpass.o tempname.o \
+	waitnb.o wildmat.o xfopena.o xmalloc.o xmemerr.o xrealloc.o xwrite.o \
+	xwritev.o
 
 all:			libinn.a
 
@@ -118,25 +115,6 @@ version.o:
 	@rm -f $(OSXATTOBJ)
 	/.attbin/ar vx /usr/.attlib/libc.a $(OSXATTOBJ)
 
-dbz.o:			dbz.c
-	$(CC) $(DBZCFLAGS) -c dbz.c
-
-../include/dbz.h:	$(DBZDIR)/dbz.h
-	@rm -f ../include/dbz.h
-	cp $(DBZDIR)/dbz.h ../include/dbz.h
-
-dbz.c:			$(DBZDIR)/dbz.c
-	cp $(DBZDIR)/dbz.c dbz.c
-
-##  Only do this if you're building a release kit.
-PATCH:			dbz.pch.intro
-	rcs -l dbz.pch
-	@rm -f dbz.pch
-	cat dbz.pch.intro >dbz.pch
-	@echo "Ignore diff's exit status."
-	-diff -c $(DBZDIR)/dbz.c dbz.c >>dbz.pch
-	ci -u dbz.pch
-
 ##
 ccenter:	$(SOURCES)
 	#load $(CFLAGS) $(SOURCES)
@@ -183,6 +161,7 @@ innvers.o:	../include/patchlevel.h
 localopen.o:	../include/macros.h
 localopen.o:	../include/nntp.h
 localopen.o:	../include/paths.h
+md5.o:		../include/md5.h
 parsedate.o:	../include/macros.h
 qio.o:		../include/macros.h
 qio.o:		../include/qio.h
