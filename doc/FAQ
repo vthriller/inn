@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.12 2001-09-10 19:16:50 eagle Exp $
+$Id: FAQ,v 1.13 2001-09-10 19:19:37 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -766,6 +766,10 @@ articles older than artcutoff in inn.conf):
 
     ctlinnd param c 0
 
+You may also want to set xrefslave to true in inn.conf and then restart
+INN on the new server if you want to keep the same article numbers as you
+had on the old server.
+
 Then try these commands (a variation on commands posted by Katsuhiro
 Kondou to inn-workers) on the old server:
 
@@ -779,9 +783,10 @@ where pathdb is the path to the directory containing the history file
 directory (usually ~news/spool/outgoing), and server is the name of the
 new news server to which you're feeding the articles.
 
-When done, either restart INN on the new server or use another ctlinnd
-param command to set the cutoff value back to what's specified in
-inn.conf.
+When done, set xrefslave to false in inn.conf again if you changed it and
+then either restart INN on the new server (necessary if you changed
+xrefslave) or use another ctlinnd param command to set the cutoff value
+back to what's specified in inn.conf.
 
 ------------------------------
 
