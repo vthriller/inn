@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.30 2002-11-23 07:42:44 eagle Exp $
+$Id: FAQ,v 1.31 2002-11-28 17:46:16 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -171,6 +171,11 @@ every program and configuration file has its own Unix man page.  The best
 place to start is by reading the entire INSTALL file and then from there
 discovering which configuration files and programs do what you want to do
 and reading their individual man pages.
+
+There are HTML conversions of the documentation that comes with recent
+versions of INN available at:
+
+    <http://www.eyrie.org/~eagle/software/inn/>
 
 For additional documentation beyond what is distributed with INN, start at
 <http://www.isc.org/inn.html> and follow the links.
