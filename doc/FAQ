@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.21 2002-08-23 17:18:04 eagle Exp $
+$Id: FAQ,v 1.22 2002-08-23 17:34:36 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -75,6 +75,8 @@ Subject: Contents
     6.2.  Process a single control message
     6.3.  Split ovdb overview across multiple disks
     6.4.  Feed all articles on a server to another server
+    6.5.  Rename a newsgroup
+    6.6.  Change the domain used for message IDs
 
 ------------------------------
 
@@ -904,7 +906,7 @@ questions in news.software.nntp.
 
 ------------------------------
 
-Subject: 6.1. Setting up a server with no external feeds, just local groups
+Subject: 6.1. Set up a server with no external feeds, just local groups
 
 The basic steps are to set up a newsfeeds file empty except for "internal"
 feeds like overchan and the like, not worry about either nntpsend or
@@ -917,7 +919,7 @@ organization.
 
 ------------------------------
 
-Subject: 6.2. Processing a single control message
+Subject: 6.2. Process a single control message
 
 To process a single control message, you can use controlchan from the
 command line.  Just type either:
@@ -935,7 +937,7 @@ easier to use ctlinnd (newgroup, rmgroup, or changegroup).
 
 ------------------------------
 
-Subject: 6.3. Splitting ovdb overview across multiple disks
+Subject: 6.3. Split ovdb overview across multiple disks
 
 The following information is from a message by Heath Kehoe to inn-workers:
 
@@ -972,7 +974,7 @@ The following information is from a message by Heath Kehoe to inn-workers:
 
 ------------------------------
 
-Subject: 6.4. Feeding all articles on a server to another server
+Subject: 6.4. Feed all articles on a server to another server
 
 To feed all articles on an existing server to another one, regardless of
 how they're stored on the server, first tell the new server to accept
@@ -1002,3 +1004,71 @@ When done, set xrefslave to false in inn.conf again if you changed it and
 then either restart INN on the new server (necessary if you changed
 xrefslave) or use another ctlinnd param command to set the cutoff value
 back to what's specified in inn.conf.
+
+------------------------------
+
+Subject: 6.5. Rename a newsgroup
+
+INN has no native support for renaming a newsgroup, and doing so is
+difficult, so the best advice is to not do this.  If there's a way that
+you can just create the new newsgroup, encourage people to start using it,
+and then remove the old newsgroup, I recommend that.  It's much easier.
+
+However, if it really must be done, it's best if you're using the
+tradspool storage method.  The newsgroup of an article is stored in the
+Newsgroups header and Xref header of the article as stored on disk (and
+possibly in Followup-To), as well as determining where the overview
+information is stored, and in the case of tradspool is also encoded in the
+article's storage token.  To rename a newsgroup in tradspool, stop the
+server, move the directory containing all of the articles to its
+appropriate new location in the news spool, edit every article to change
+the old name to the new name in Newsgroups, Followup-To, and Xref, and
+then rebuild history and overview with makehistory.
+
+If any articles were crossposted to other newsgroups, you'll also have to
+find and recreate the links in those newsgroups to the new location of the
+articles (if the links were hard links and the process of changing the
+Xref, Followup-To, Newsgroups headers didn't break those links, you may be
+lucky and be able to skip this).
+
+If you're using another storage method, this is harder, although with
+timehash you may be able to just change the Newsgroups, Xref, Followup-To
+headers of the articles in that newsgroup and then rebuild history and
+overview as above.
+
+One other approach that can be used regardless of storage method is to
+refeed the articles to the server into a new newsgroup.  This approach
+works best if you're also changing news servers at the same time;
+otherwise, the message IDs of the articles will already be in history, and
+you'll have to change the message IDs of all of the messages or remove
+them from the history database (such as by moving the articles away,
+changing /remember/ to 0 so that old history entries won't be retained,
+and then running expire to purge them out of history).  To do this, get
+all of the messages into a directory (by pulling them down via NNTP or
+some other method), change the Newsgroups, Xref, and Followup-To headers
+to rename the newsgroup, and then create a file containing paths to all of
+the articles, one per line.  You can then use that file as input to
+innxmit, pointing it at the server to which to feed the articles, and if
+the articles aren't listed in history on that server and it carries the
+new group, they will be accepted into the new newsgroup.
+
+Note that if you use this method and something goes wrong the first time,
+the message IDs will probably have all been added to history on the new
+server and the articles now will never be accepted until those entries are
+removed from history again (or all the message IDs changed).
+
+------------------------------
+
+Subject: 6.6. Change the domain used for message IDs
+
+By default, any message IDs generated by INN will use the domain of the
+local system for the right-hand-side of the message ID.  In some cases,
+this isn't desirable for various reasons (the server may have an internal
+name that doesn't make sense on Usenet at large, or one may not want to
+expose the name of the server).
+
+In INN 2.3.3, you can set domain: in an access stanza of readers.conf, and
+all posts coming from connections to which that access stanza applies will
+use that domain to generate message IDs.  So if you need to change the
+domain used to generate message IDs for every local post from your server,
+just add a domain: key to every access stanza in readers.conf.
