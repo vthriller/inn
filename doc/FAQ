@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.24 2002-08-23 17:51:10 eagle Exp $
+$Id: FAQ,v 1.25 2002-08-23 22:08:57 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -69,6 +69,7 @@ Subject: Contents
 5.  Problems on Specific Systems
     5.1.  INN won't compile on SCO OpenServer
     5.2.  Using raw devices on Solaris destroys the partition table
+    5.3.  Will INN run on Windows?
 
 6.  How Do I...
     6.1.  Set up a server with no external feeds, just local groups
@@ -896,6 +897,20 @@ Generally all that has to be done is to repartition the disk with slice 0
 starting from cylinder 1 and extending to the end of the disk and then
 point INN at slice 0 instead of slice 2.  You lose some small amount of
 space, but generally not enough to care about.
+
+------------------------------
+
+Subject: 5.3. Will INN work on Windows?
+
+Amazingly enough, the answer is yes.
+
+Not out of the box, however; the standard INN distribution doesn't build
+on Windows.  There is, however, a port to Cygwin (which is a Unix-like
+environment for Windows).  For more information, see:
+
+    <http://members.verizon.net/~vze35rzk/inn/>
+
+Don't forget to peruse INSTALL if you download and want to try this.
 
 ------------------------------
 
