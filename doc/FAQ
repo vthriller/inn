@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.31 2002-11-28 17:46:16 eagle Exp $
+$Id: FAQ,v 1.32 2002-11-28 22:57:51 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -185,7 +185,7 @@ lacking in some more general details on configuring news servers.  Some of
 the links off of the INN home page have additional overview documentation
 or documentation on how to set up servers for specific roles.
 
-Another good resource is the newsgroup news.software.nntp (and the Deja
+Another good resource is the newsgroup news.software.nntp (and the Google
 archives thereof) and the archive of the inn-workers mailing list.  A link
 to the latter is off the INN page referenced above.
 
