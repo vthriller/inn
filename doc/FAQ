@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.32 2002-11-28 22:57:51 eagle Exp $
+$Id: FAQ,v 1.33 2002-12-03 04:26:52 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -79,6 +79,7 @@ Subject: Contents
     6.5.  Rename a newsgroup
     6.6.  Change the domain used for message IDs
     6.7.  Use INN without a direct news feed
+    6.8.  Generate MRTG graphs for INN
 
 ------------------------------
 
@@ -1166,3 +1167,39 @@ have found INN rather complicated and difficult to configure for a small,
 simple personal news cache.  If your needs and goals are simple and the
 number of groups you're interested in is small, you may be better off with
 a smaller, lighter package such as LeafNode or NNTPcache.
+
+------------------------------
+
+Subject: 6.8. Generate MRTG graphs for INN
+
+INN's CNFS storage system has direct support for producing information
+suitable for MRTG graphs on the usage of the CNFS cycbuffs.  Running
+cnfsstat -m <cycbuf> will generate output suitable for MRTG, and running
+cnfsstat -p will generate sample MRTG configuration fragments for each
+cycbuff.
+
+To generate MRTG graphs of the usage of the buffindexed overview system,
+try the following configuration fragment:
+
+    Target[overview-BUFF]: `/usr/local/etc/mrtg/overview.sh`
+    MaxBytes[overview-BUFF]: 100
+    Title[overview-BUFF]: BUFF1 Usage
+    Options[overview-BUFF]: growright gauge
+    YLegend[overview-BUFF]: Overview Buffers
+    ShortLegend[overview-BUFF]: %
+    PageTop[overview-BUFF]: <H1>Usage of Overview Buffers</H1>
+    <BR><TT>overview</TT>
+
+where the overview.sh script is:
+
+    #!/bin/sh
+    echo "100"
+    /usr/local/news/bin/inndf -n | awk '{print $1}'
+    echo "0"
+    echo "overview"
+
+This sample configuration is from Basil Kruglov.
+
+I'm not aware of any packaged solutions for generating MRTG data from
+other things, such as incoming or outcoming news flows.  If anyone has any
+pointers, let me know.
