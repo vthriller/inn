@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.13 2001-09-10 19:19:37 eagle Exp $
+$Id: FAQ,v 1.14 2001-10-05 00:27:47 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -864,7 +864,8 @@ Subject: 4.3. Modification of read-only value attempted (Cleanfeed)
 INN 2.3 and later have an internal optimization to the interface to
 embedded filters that makes filtering about 15-20% faster, but which
 disallows a trick that many versions of Cleanfeed use to count the number
-of lines in the article.
+of lines in the article.  (This problem is fixed in current versions of
+Cleanfeed.)
 
 To correct this problem, find the line in Cleanfeed that looks like:
 
