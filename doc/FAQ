@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.1 2000-12-23 03:01:37 eagle Exp $
+$Id: FAQ,v 1.2 2000-12-23 11:41:23 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -60,6 +60,7 @@ Subject: Contents
     3.4.  INN is running out of file descriptors
     3.5.  Setting up a server with no external feeds, just local groups
     3.6.  Processing a single control message
+    3.7.  Splitting ovdb overview across multiple disks
 
 4.  Error Messages
     4.1.  innd: SERVER cant store article
@@ -687,6 +688,43 @@ if you have the storage API token of the article.  (This assumes
 controlchan is in a directory in your path.)  This is useful mostly for
 testing; if you just want to create, remove, or change a group, it's
 easier to use ctlinnd (newgroup, rmgroup, or changegroup).
+
+------------------------------
+
+Subject: 3.7. Splitting ovdb overview across multiple disks
+
+The following information is from a message by Heath Kehoe to inn-workers:
+
+    There's a way to put the data files in different places, but it's kind
+    of a hack, and I havn't actually tried it.  You can place a file named
+    DB_CONFIG in your overview directory.  In that file, you can list
+    directories that libdb will search when it goes to open a database.
+    This functionality is provided by the db library, and not by ovdb
+    itself.
+
+    For example, let's say you have pathoverview set to "/mnt/overview";
+    and you had four additional filesystems mounted on "/mnt/ov?".  You
+    would create a file "/mnt/overview/DB_CONFIG" containing the following
+    lines:
+
+        DB_DATA_DIR /mnt/overview
+        DB_DATA_DIR /mnt/ov1
+        DB_DATA_DIR /mnt/ov2
+        DB_DATA_DIR /mnt/ov3
+        DB_DATA_DIR /mnt/ov4
+
+    (This is valid for 2.7.7.  For 3.1.17, replace "DB_DATA_DIR" with
+    "set_data_dir").
+
+    Distribute your ovNNNNN files into the four filesystems.  (say, 8
+    each).  When called upon to open a database file, the db library will
+    look for it in each of the specified directories (in order).  If said
+    file is not found, one will be created in the first of those
+    directories.
+
+    Whenever you change DB_CONFIG or move database files around, make sure
+    all news processes that use the database are shut down first
+    (including nnrpds).
 
 ------------------------------
 
