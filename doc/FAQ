@@ -1,4 +1,4 @@
-$Id: FAQ,v 0.3 1999-10-24 20:31:49 eagle Exp $
+$Id: FAQ,v 0.4 2000-02-03 10:20:05 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -51,6 +51,7 @@ Subject: Contents
     2.2.  What is CNFS?
     2.3.  What are timehash and timecaf?
     2.4.  What is overview?
+    2.5.  What are deferrals (NNTP code 431)?
 
 3.  Specific Problems
     3.1.  Reader performance is extremely slow using the storage API
@@ -450,6 +451,34 @@ specified in the newsfeeds configuration file.
 written out internally by INN and overchan only stores index information
 into that "unified overview" or uniover database.  Under INN 2.3, a
 completely different mechanism is used.)
+
+------------------------------
+
+Subject: 2.5. What are deferrals (NNTP code 431)?
+
+Consider the following situation.  You have two incoming peers, both of
+which are getting ready to offer you an article in streaming mode.  The
+first sends you a CHECK <message-id> message, to which you respond
+affirmatively (i.e., you don't already have the article).  Then, before
+that peer sends you the article with TAKETHIS, you receive a CHECK
+<message-id> from the second peer for the same message.  What response
+does INN send to the second peer?
+
+If deferrals are enabled (noresendid == false in incoming.conf for that
+peer, the default), INN will send a 431 deferral telling that peer that
+you may or may not want the article; try again later.  Chances are that
+when it retries, you will have received the article from the first peer
+and you'll just refuse it.  But if the first peer dies before it ever
+sends you the article, this way you can still get it from the second peer.
+
+If deferrals are disabled, INN will refuse the article from the second
+peer, which means there's a possibility you'll lose news if the first peer
+dies before sending you the article.
+
+As a side note, some versions of Diablo, upon receiving a deferral, turns
+around and immediately sends the article via TAKETHIS, which is basically
+exactly what you don't want.  (Chances are extremely high in practice that
+the first peer will come through with the article.)
 
 ------------------------------
 
