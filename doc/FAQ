@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.50 2004-04-12 19:45:30 eagle Exp $
+$Id: FAQ,v 1.51 2004-05-17 05:37:08 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -84,6 +84,7 @@ Subject: Contents
     6.9.  Hide the junk and control groups from users
     6.10. Modify the body of posts made through my server
     6.11. Hide the X-Trace header
+    6.12. Run innd and nnrpd on separate ports
 
 (Note that some numbers have been skipped.  When questions are removed,
 the remaining questions are not renumbered to avoid breaking links in
@@ -532,11 +533,11 @@ selection of groups it can still do just fine).  If your server is
 spending a lot of time writing articles and you're using traditional
 spool, this is probably the problem.
 
-One possible solution would be to switch to the storage API and CNFS or
-timehash as a storage mechanism.  This will require rebuilding the history
-and overview data for all the articles in your news spool, however, and
-bear in mind that you may just be exchanging one performance problem for
-another since traditional spool is fairly fast for news reading (see 3.2).
+One possible solution would be to switch to CNFS as a storage mechanism.
+You can do this simply by configuring CNFS (see INSTALL for details),
+changing storage.conf to direct some or all of the incoming traffic to
+CNFS buffers, and then restarting INN.  Older articles will continue to be
+stored in tradspool until they expire, but new articles will go into CNFS.
 
 ------------------------------
 
@@ -1185,3 +1186,31 @@ Try using a posting filter like this:
 
 Note that you have to set $modify_headers to make changes to the article
 header effective in the actual posted article.
+
+------------------------------
+
+Subject: 6.11. Run innd and nnrpd on separate ports
+
+Originally, innd was designed to handle all incoming connections and hand
+them off to nnrpd as appropriate.  It is, however, becoming increasingly
+common to run innd and nnrpd on separate ports for a variety of reasons,
+such as wanting to handle connections to nnrpd with a smart network
+connection handling daemon like xinetd that can do things like rate
+limiting of connections.  INN does support this configuration, but be
+warned that since you need to run nnrpd on port 119 for most reader
+clients to be able to find it, you'll need to tell all of your news peers
+to use a different port to feed you news.
+
+The recommended alternate port for innd transit-only connections is port
+433, which has been reserved for that purpose.  If you want to use some
+low-numbered port (less than 1024) other than 119 or 433 for innd, you
+will need to build INN with the --with-innd-port option specifying that
+port.
+
+Now, set port in inn.conf to the port you want to run innd on and add
+noreader: true (so that innd will never attempt to hand connections off to
+nnrpd).  Then, restart INN.  It will now be listening on the new port.
+You should now set up nnrpd to run via of xinetd, inetd, tcpserver, or
+some other similar network connection handling daemon on port 119.  Make
+sure that nnrpd is run as the news user, not as root.  You don't have to
+pass any arguments to nnrpd (unless you want to).
