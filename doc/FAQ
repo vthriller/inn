@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.8 2001-03-07 22:53:48 eagle Exp $
+$Id: FAQ,v 1.9 2001-03-14 01:39:42 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -69,7 +69,7 @@ Subject: Contents
     4.2.  innd: SERVER internal no control and/or junk group
     4.3.  Modification of read-only value attempted (Cleanfeed)
 
-5.  Problems on Specific Operating Systems
+5.  Problems on Specific Systems
     5.1.  Can't get INN to compile on SCO OpenServer
     5.2.  Using raw devices on Solaris destroys the partition table
 
@@ -872,7 +872,7 @@ and is guaranteed to be correct.
 
 ------------------------------
 
-Subject: 5. Problems on Specific Operating Systems
+Subject: 5. Problems on Specific Systems
 
 Problems specific to particular operating systems or platforms.  Look here
 if INN doens't behave as expected on your particular system, or if you're
