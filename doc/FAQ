@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.0 2000-10-08 21:27:59 eagle Exp $
+$Id: FAQ,v 1.1 2000-12-23 03:01:37 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -64,6 +64,7 @@ Subject: Contents
 4.  Error Messages
     4.1.  innd: SERVER cant store article
     4.2.  innd: SERVER internal no control and/or junk group
+    4.3.  Modification of read-only value attempted (Cleanfeed)
 
 5.  Problems on Specific Operating Systems
     5.1.  Can't get INN to compile on SCO OpenServer
@@ -755,6 +756,26 @@ messages will go into the top-level catch-all group).  The n flag is so
 that users won't post messages directly to the control* groups; control
 messages should be posted to the groups that they affect instead and INN
 will refile them automatically based on the Control header.
+
+------------------------------
+
+Subject: 4.3. Modification of read-only value attempted (Cleanfeed)
+
+INN 2.3 and later have an internal optimization to the interface to
+embedded filters that makes filtering about 15-20% faster, but which
+disallows a trick that many versions of Cleanfeed use to count the number
+of lines in the article.
+
+To correct this problem, find the line in Cleanfeed that looks like:
+
+    $lines = $hdr{'__BODY__'} =~ tr/\n/\n/;
+
+and change it to:
+
+    $lines = $hdr{'__LINES__'};
+
+The __LINES__ hash value is set internally by all recent versions of INN
+and is guaranteed to be correct.
 
 ------------------------------
 
