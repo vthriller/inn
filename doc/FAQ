@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.41 2003-09-02 03:38:02 eagle Exp $
+$Id: FAQ,v 1.42 2003-09-08 04:33:12 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1128,11 +1128,17 @@ this isn't desirable for various reasons (the server may have an internal
 name that doesn't make sense on Usenet at large, or one may not want to
 expose the name of the server).
 
-In INN 2.3.3, you can set domain: in an access stanza of readers.conf, and
-all posts coming from connections to which that access stanza applies will
-use that domain to generate message IDs.  So if you need to change the
-domain used to generate message IDs for every local post from your server,
-just add a domain: key to every access stanza in readers.conf.
+In INN 2.3.3 and later, you can set virtualhost: to true in an access
+stanza of readers.conf and then set domain: in the same stanza, and all
+posts coming from connections to which that access stanza applies will use
+that domain to generate message IDs.  So if you need to change the domain
+used to generate message IDs for every local post from your server, just
+add virtualhost: and domain: keys to every access stanza in readers.conf.
+
+This is really overkill for this option, and eventually the domain:
+parameter in inn.conf will probably be changed to allow this to be
+modified for the whole server.  (Right now, domain: in inn.conf means
+something completely different.)
 
 ------------------------------
 
