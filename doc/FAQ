@@ -1,4 +1,4 @@
-$Id: FAQ,v 0.2 1999-10-18 11:37:11 eagle Exp $
+$Id: FAQ,v 0.3 1999-10-24 20:31:49 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -57,6 +57,7 @@ Subject: Contents
     3.2.  The news server isn't keeping up with incoming news
     3.3.  news.notice is empty and the nightly report is missing things
     3.4.  INN is running out of file descriptors
+    3.5.  Setting up a server with no external feeds, just local groups
 
 4.  Error Messages
     4.1.  innd: SERVER cant store article
@@ -617,6 +618,18 @@ Also from INSTALL in the latest development version:
     (and may need to if you have a particularly large site), but that can
     cause RPC and some stdio applications to break.  It therefore probably
     isn't a good idea on a machine that isn't dedicated to INN.
+
+------------------------------
+
+Subject: 3.5. Setting up a server with no external feeds, just local groups
+
+The basic steps are to set up a newsfeeds file empty except for "internal"
+feeds like overchan and the like, not worry about either nntpsend or
+innfeed, have only localhost in incoming.conf (hosts.nntp in older
+versions), create the minimal active file (see 4.2) before starting the
+server, and then after starting the server create the groups you want to
+carry with ctlinnd newgroup.  Set up reading permissions using nnrp.access
+as appropriate for your organization.
 
 ------------------------------
 
