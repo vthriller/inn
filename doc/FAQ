@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.22 2002-08-23 17:34:36 eagle Exp $
+$Id: FAQ,v 1.23 2002-08-23 17:38:54 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1024,6 +1024,20 @@ server, move the directory containing all of the articles to its
 appropriate new location in the news spool, edit every article to change
 the old name to the new name in Newsgroups, Followup-To, and Xref, and
 then rebuild history and overview with makehistory.
+
+The following bit of Perl may help with the renaming (from Jeffrey
+Vinocur):
+
+    #!/usr/bin/perl -wi
+    my ($src, $dst) = (shift, shift);
+    die "Usage: $0 oldgroup newgroup [file1 [file2 ...]]\n"
+        unless(defined $dst);
+    while(<>) {
+        s/$src/$dst/g if 1 .. /^$/ and /^(Newsgroups|Followup-To|Xref):/i;
+        print;
+    } continue {
+        close ARGV if eof;
+    }
 
 If any articles were crossposted to other newsgroups, you'll also have to
 find and recreate the links in those newsgroups to the new location of the
