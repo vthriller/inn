@@ -30,6 +30,10 @@ AC_REQUIRE([AM_PROG_LD])
 AC_REQUIRE([AM_PROG_NM])
 AC_REQUIRE([AC_PROG_LN_S])
 
+# Always use our own libtool.
+LIBTOOL='$(SHELL) $(top_builddir)/libtool'
+AC_SUBST(LIBTOOL)
+
 dnl Allow the --disable-shared flag to stop us from building shared libs.
 AC_ARG_ENABLE(shared,
 [  --enable-shared         build shared libraries [default=yes]],
