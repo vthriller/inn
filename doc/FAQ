@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.20 2002-08-11 01:51:40 eagle Exp $
+$Id: FAQ,v 1.21 2002-08-23 17:18:04 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -59,10 +59,6 @@ Subject: Contents
     3.3.  The news server isn't keeping up with incoming news
     3.4.  news.notice is empty and the nightly report is missing things
     3.5.  INN is running out of file descriptors
-    3.6.  Setting up a server with no external feeds, just local groups
-    3.7.  Processing a single control message
-    3.8.  Splitting ovdb overview across multiple disks
-    3.9.  Feeding all articles on a server to another server
 
 4.  Error Messages
     4.1.  innd: SERVER cant store article
@@ -73,6 +69,12 @@ Subject: Contents
 5.  Problems on Specific Systems
     5.1.  INN won't compile on SCO OpenServer
     5.2.  Using raw devices on Solaris destroys the partition table
+
+6.  How Do I...
+    6.1.  Set up a server with no external feeds, just local groups
+    6.2.  Process a single control message
+    6.3.  Split ovdb overview across multiple disks
+    6.4.  Feed all articles on a server to another server
 
 ------------------------------
 
@@ -690,107 +692,6 @@ Also from INSTALL:
 
 ------------------------------
 
-Subject: 3.6. Setting up a server with no external feeds, just local groups
-
-The basic steps are to set up a newsfeeds file empty except for "internal"
-feeds like overchan and the like, not worry about either nntpsend or
-innfeed, have only localhost in incoming.conf (hosts.nntp in older
-versions), create the minimal active file (see 4.2) before starting the
-server, and then after starting the server create the groups you want to
-carry with ctlinnd newgroup.  Set up reading permissions using
-readers.conf (nnrp.access for INN prior to 2.3) as appropriate for your
-organization.
-
-------------------------------
-
-Subject: 3.7. Processing a single control message
-
-To process a single control message, you can use controlchan from the
-command line.  Just type either:
-
-    echo /path/to/article-file | controlchan
-
-or:
-
-    echo @token@ | controlchan
-
-if you have the storage API token of the article.  (This assumes
-controlchan is in a directory in your path.)  This is useful mostly for
-testing; if you just want to create, remove, or change a group, it's
-easier to use ctlinnd (newgroup, rmgroup, or changegroup).
-
-------------------------------
-
-Subject: 3.8. Splitting ovdb overview across multiple disks
-
-The following information is from a message by Heath Kehoe to inn-workers:
-
-    There's a way to put the data files in different places, but it's kind
-    of a hack, and I havn't actually tried it.  You can place a file named
-    DB_CONFIG in your overview directory.  In that file, you can list
-    directories that libdb will search when it goes to open a database.
-    This functionality is provided by the db library, and not by ovdb
-    itself.
-
-    For example, let's say you have pathoverview set to "/mnt/overview";
-    and you had four additional filesystems mounted on "/mnt/ov?".  You
-    would create a file "/mnt/overview/DB_CONFIG" containing the following
-    lines:
-
-        DB_DATA_DIR /mnt/overview
-        DB_DATA_DIR /mnt/ov1
-        DB_DATA_DIR /mnt/ov2
-        DB_DATA_DIR /mnt/ov3
-        DB_DATA_DIR /mnt/ov4
-
-    (This is valid for 2.7.7.  For 3.1.17, replace "DB_DATA_DIR" with
-    "set_data_dir").
-
-    Distribute your ovNNNNN files into the four filesystems.  (say, 8
-    each).  When called upon to open a database file, the db library will
-    look for it in each of the specified directories (in order).  If said
-    file is not found, one will be created in the first of those
-    directories.
-
-    Whenever you change DB_CONFIG or move database files around, make sure
-    all news processes that use the database are shut down first
-    (including nnrpds).
-
-------------------------------
-
-Subject: 3.9. Feeding all articles on a server to another server
-
-To feed all articles on an existing server to another one, regardless of
-how they're stored on the server, first tell the new server to accept
-articles regardless of how old they are (otherwise, INN will reject
-articles older than artcutoff in inn.conf):
-
-    ctlinnd param c 0
-
-You may also want to set xrefslave to true in inn.conf and then restart
-INN on the new server if you want to keep the same article numbers as you
-had on the old server.
-
-Then try these commands (a variation on commands posted by Katsuhiro
-Kondou to inn-workers) on the old server:
-
-    cd pathdb
-    perl -ne 'chomp; ($a,$b,$_) = split " "; print "$_\n" if $_' history \
-        | tr . / > pathoutgoing/list
-    innxmit server list
-
-where pathdb is the path to the directory containing the history file
-(usually ~news/db), pathoutgoing is the path to the outgoing spool
-directory (usually ~news/spool/outgoing), and server is the name of the
-new news server to which you're feeding the articles.
-
-When done, set xrefslave to false in inn.conf again if you changed it and
-then either restart INN on the new server (necessary if you changed
-xrefslave) or use another ctlinnd param command to set the cutoff value
-back to what's specified in inn.conf.
-
-------------------------------
-
 Subject: 4. Error Messages
 
 Explanations of specific error messages, including solutions where
@@ -992,3 +893,112 @@ Generally all that has to be done is to repartition the disk with slice 0
 starting from cylinder 1 and extending to the end of the disk and then
 point INN at slice 0 instead of slice 2.  You lose some small amount of
 space, but generally not enough to care about.
+
+------------------------------
+
+Subject: 6. How Do I...
+
+This section documents various common or uncommon tasks or configurations
+that people want to do with INN.  It is mostly taken from frequently asked
+questions in news.software.nntp.
+
+------------------------------
+
+Subject: 6.1. Setting up a server with no external feeds, just local groups
+
+The basic steps are to set up a newsfeeds file empty except for "internal"
+feeds like overchan and the like, not worry about either nntpsend or
+innfeed, have only localhost in incoming.conf (hosts.nntp in older
+versions), create the minimal active file (see 4.2) before starting the
+server, and then after starting the server create the groups you want to
+carry with ctlinnd newgroup.  Set up reading permissions using
+readers.conf (nnrp.access for INN prior to 2.3) as appropriate for your
+organization.
+
+------------------------------
+
+Subject: 6.2. Processing a single control message
+
+To process a single control message, you can use controlchan from the
+command line.  Just type either:
+
+    echo /path/to/article-file | controlchan
+
+or:
+
+    echo @token@ | controlchan
+
+if you have the storage API token of the article.  (This assumes
+controlchan is in a directory in your path.)  This is useful mostly for
+testing; if you just want to create, remove, or change a group, it's
+easier to use ctlinnd (newgroup, rmgroup, or changegroup).
+
+------------------------------
+
+Subject: 6.3. Splitting ovdb overview across multiple disks
+
+The following information is from a message by Heath Kehoe to inn-workers:
+
+    There's a way to put the data files in different places, but it's kind
+    of a hack, and I havn't actually tried it.  You can place a file named
+    DB_CONFIG in your overview directory.  In that file, you can list
+    directories that libdb will search when it goes to open a database.
+    This functionality is provided by the db library, and not by ovdb
+    itself.
+
+    For example, let's say you have pathoverview set to "/mnt/overview";
+    and you had four additional filesystems mounted on "/mnt/ov?".  You
+    would create a file "/mnt/overview/DB_CONFIG" containing the following
+    lines:
+
+        DB_DATA_DIR /mnt/overview
+        DB_DATA_DIR /mnt/ov1
+        DB_DATA_DIR /mnt/ov2
+        DB_DATA_DIR /mnt/ov3
+        DB_DATA_DIR /mnt/ov4
+
+    (This is valid for 2.7.7.  For 3.1.17, replace "DB_DATA_DIR" with
+    "set_data_dir").
+
+    Distribute your ovNNNNN files into the four filesystems.  (say, 8
+    each).  When called upon to open a database file, the db library will
+    look for it in each of the specified directories (in order).  If said
+    file is not found, one will be created in the first of those
+    directories.
+
+    Whenever you change DB_CONFIG or move database files around, make sure
+    all news processes that use the database are shut down first
+    (including nnrpds).
+
+------------------------------
+
+Subject: 6.4. Feeding all articles on a server to another server
+
+To feed all articles on an existing server to another one, regardless of
+how they're stored on the server, first tell the new server to accept
+articles regardless of how old they are (otherwise, INN will reject
+articles older than artcutoff in inn.conf):
+
+    ctlinnd param c 0
+
+You may also want to set xrefslave to true in inn.conf and then restart
+INN on the new server if you want to keep the same article numbers as you
+had on the old server.
+
+Then try these commands (a variation on commands posted by Katsuhiro
+Kondou to inn-workers) on the old server:
+
+    cd pathdb
+    perl -ne 'chomp; ($a,$b,$_) = split " "; print "$_\n" if $_' history \
+        | tr . / > pathoutgoing/list
+    innxmit server list
+
+where pathdb is the path to the directory containing the history file
+(usually ~news/db), pathoutgoing is the path to the outgoing spool
+directory (usually ~news/spool/outgoing), and server is the name of the
+new news server to which you're feeding the articles.
+
+When done, set xrefslave to false in inn.conf again if you changed it and
+then either restart INN on the new server (necessary if you changed
+xrefslave) or use another ctlinnd param command to set the cutoff value
+back to what's specified in inn.conf.
