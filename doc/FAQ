@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.17 2002-05-21 06:03:37 eagle Exp $
+$Id: FAQ,v 1.18 2002-06-19 01:17:48 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -30,7 +30,7 @@ quicker responses by posting to news.software.nntp (even, due to the
 quirky way in which I read mail and news, from me).
 
 This FAQ is posted monthly to news.software.nntp, and is available on the
-web at <URL:http://www.eyrie.org/~eagle/faqs/inn.html>.
+web at <http://www.eyrie.org/~eagle/faqs/inn.html>.
 
 ------------------------------
 
@@ -107,7 +107,7 @@ The README that comes with INN has this to say (in part):
 For a more complete answer, see that file.  A full description of what
 Usenet and netnews are is beyond the scope of this document; for a
 beginner's introduction, see the news.newusers.questions home page at
-<URL:http://www.geocities.com/ResearchTriangle/Lab/6882/>.
+<http://www.geocities.com/ResearchTriangle/Lab/6882/>.
 
 ------------------------------
 
@@ -134,7 +134,7 @@ NEWS.
 
 Subject: 1.3. Where can I get INN?
 
-The download site for INN is <URL:ftp://ftp.isc.org/isc/inn/>.  In that
+The download site for INN is <ftp://ftp.isc.org/isc/inn/>.  In that
 directory are the various releases of INN, some additional documentation
 (particularly of security holes), the original INN Usenix paper.
 
@@ -166,7 +166,7 @@ discovering which configuration files and programs do what you want to do
 and reading their individual man pages.
 
 For additional documentation beyond what is distributed with INN, start at
-<URL:http://www.isc.org/inn.html> and follow the links.
+<http://www.isc.org/inn.html> and follow the links.
 
 The documentation that comes with INN is fairly technical in nature and
 lacking in some more general details on configuring news servers.  Some of
@@ -179,15 +179,15 @@ to the latter is off the INN page referenced above.
 
 Finally, the following additional links may be useful:
 
-<URL:http://web.inter.nl.net/users/Elena.Samsonova/unix/INN/v2.3/>
+<http://web.inter.nl.net/users/Elena.Samsonova/unix/INN/v2.3/>
     Excellent introductory and overview documentation for INN 2.3 and
     later.
 
-<URL:http://www.avalon.net/~hakehoe/inn/>
+<http://www.avalon.net/~hakehoe/inn/>
     Information about the ovdb overview method and about running INN on
     HP-UX.
 
-<URL:http://www.aplawrence.com/Unixart/newsserver.html>
+<http://www.aplawrence.com/Unixart/newsserver.html>
     A tutorial on setting up INN aimed at beginners using SCO Unix.  While
     it's mostly focused on SCO, it may be useful for any beginner to INN
     and news servers.
@@ -269,7 +269,7 @@ There are four major ways.  First, from the README:
     implementation, handles the official support/release of BIND, and
     supports the Kerberos Version 5 effort at MIT.  You can learn more
     about the ISC's goals and accomplishments from the web page at
-    <URL:http://www.isc.org/isc/>.
+    <http://www.isc.org/isc/>.
 
 The ISC provides ftp and web space, release coordination, CVS server
 access for developers, mailing lists and archives, and (as resources
