@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.36 2003-03-03 03:23:51 eagle Exp $
+$Id: FAQ,v 1.37 2003-03-21 21:08:08 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -66,7 +66,7 @@ Subject: Contents
     4.4.  tradspool: could not open ... File exists
 
 5.  Problems on Specific Systems
-    5.1.  INN won't compile on SCO OpenServer
+    5.1.  INN won't compile on SCO OpenServer / UnixWare / OpenUNIX
     5.2.  Using raw devices on Solaris destroys the partition table
     5.3.  Will INN run on Windows?
 
@@ -857,6 +857,11 @@ having trouble compiling INN in the first place.
 ------------------------------
 
 Subject: 5.1. INN won't compile on SCO OpenServer
+
+For information about getting INN to run on SCO UnixWare 7.1.* and
+OpenUNIX 8.0.0, see:
+
+    <http://zenez.pcunix.com/tmp/ou8faqz/cache/269.html>
 
 On SCO OpenServer, the default cc requires -O be given when -Kalloca is
 given (which is added by default by configure since the parsers generated
