@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.45 2003-09-15 07:15:42 eagle Exp $
+$Id: FAQ,v 1.46 2003-10-18 04:46:50 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1040,7 +1040,7 @@ scale, but not really anything designed to handle a lot of groups or a lot
 of articles).  You will need an external package to do this.  The two most
 popular are suck and newsx, which you can get from:
 
-    <http://www.sucknews.org/>
+    <http://home.comcast.net/~bobyetman/index.html>
     <http://www.kvaleberg.com/newsx.html>
 
 respectively.
