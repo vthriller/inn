@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.25 2002-08-23 22:08:57 eagle Exp $
+$Id: FAQ,v 1.26 2002-08-23 23:10:07 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1054,6 +1054,11 @@ Vinocur):
     } continue {
         close ARGV if eof;
     }
+
+Note that this may cause some problems if the newsgroup you're renaming is
+contained in the name of another newsgroup to which messages in that group
+are crossposted.  If that's a problem, you may have to use a more
+sophisticated script.
 
 If any articles were crossposted to other newsgroups, you'll also have to
 find and recreate the links in those newsgroups to the new location of the
