@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.52 2004-05-17 09:41:52 eagle Exp $
+$Id: FAQ,v 1.53 2004-11-10 03:28:38 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -120,7 +120,7 @@ The README that comes with INN has this to say (in part):
     those servers pass the articles along to their peers, and so on,
     resulting in "flood fill" propagation of news articles.
 
-    INN is free software, supported by the Internet Software Consortium and
+    INN is free software, supported by the Internet Systems Consortium and
     volunteers around the world.
 
 For a more complete answer, see that file.  A full description of what
@@ -310,18 +310,17 @@ better.
 
 Fourth, from the README:
 
-    Note that INN is supported by the Internet Software Consortium, and
+    Note that INN is supported by the Internet Systems Consortium, and
     although it is free for use and redistribution and incorporation into
     vendor products and export and anything else you can think of, it
     costs money to produce.  That money comes from ISP's, hardware and
     software vendors, companies who make extensive use of the software,
     and generally kind hearted folk such as yourself.
 
-    The Internet Software Consortium has also commissioned a DHCP server
-    implementation, handles the official support/release of BIND, and
-    supports the Kerberos Version 5 effort at MIT.  You can learn more
-    about the ISC's goals and accomplishments from the web page at
-    <http://www.isc.org/isc/>.
+    The Internet Systems Consortium has also commissioned a DHCP server
+    implementation and handles the official support/release of BIND.  You
+    can learn more about the ISC's goals and accomplishments from the web
+    page at <http://www.isc.org/>.
 
 The ISC provides ftp and web space, CVS server access for developers, and
 mailing lists and archives.  Donations to help support all of that are
