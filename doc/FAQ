@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.51 2004-05-17 05:37:08 eagle Exp $
+$Id: FAQ,v 1.52 2004-05-17 09:41:52 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -60,6 +60,7 @@ Subject: Contents
     3.4.  news.notice is empty and the nightly report is missing things
     3.5.  INN is running out of file descriptors
     3.6.  Can't get debugging information out of INN
+    3.7.  Articles aren't being sent to remote peers
 
 4.  Error Messages
     4.1.  innd: SERVER cant store article
@@ -85,6 +86,7 @@ Subject: Contents
     6.10. Modify the body of posts made through my server
     6.11. Hide the X-Trace header
     6.12. Run innd and nnrpd on separate ports
+    6.13. Back up and restore an INN installation
 
 (Note that some numbers have been skipped.  When questions are removed,
 the remaining questions are not renumbered to avoid breaking links in
@@ -598,6 +600,80 @@ This starts innd under strace, suitable for debugging startup core dumps
 and the like.  You can use this as a general model for a variety of
 debugging; for example, you could replace the strace invocation with an
 invocation of gdb and then start innd from inside gdb with the -d option.
+
+------------------------------
+
+Subject: 3.7. Articles aren't being sent to remote peers
+
+(This entry is based on a post by Jeffrey M. Vinocur.)
+
+Here's how to trace through INN's logs to figure out what's happened to a
+particular article.  This should help you discover where the process of
+feeding an article to a peer broke down.
+
+1. First you look in the $pathlog/news file.  There should be one line per
+   article (search for the Message-ID, or they're in order by time of
+   arrival if you know that).
+  
+   If you don't see a line for the article in question, your innd has
+   never seen it.  For articles being fed remotely, this means your peer
+   didn't feed it to you.  For articles being posted to your server, this
+   generally indicates some sort of problem in nnrpd.
+
+   (The only other time you wouldn't see a line for the article in
+   question is if your innd has seen it in the past, and is considering
+   this attempt a "duplicate".)
+
+2. Next, look at the second field of the line you've found in
+   $pathlog/news.
+
+   If it's "-", then your innd rejected the article.  The reason should be
+   at the end of that line.
+
+3. At this point, you should be looking at a line with "+" in the second
+   field.  The article should be on your server at this point.
+
+   If it's not, either it's been canceled, or has already expired.
+
+4. You're now interested in whether the article was sent to your peers.
+   At the end of the same line in $pathlog/news, innd puts all of the
+   peers it thinks should receive this article.
+
+   If you don't see a peer you expect there, it indicates that
+   $pathetc/newsfeeds is not configured in the way you think it is.
+
+5. If a peer is listed at the end of the line, the article should have
+   been fed to that peer.
+  
+   If a peer doesn't have that article, it's possible that the article is
+   spooled on your system somewhere.  Check $pathspool/outgoing, or the
+   innfeed spool if the peer is configured to use innfeed.  (It's probably
+   easier to look for error messages in $pathlog/news.notice than to
+   actually wade around in $pathspool/innfeed.)
+
+6. If you're sure the article isn't spooled, and it doesn't show up on the
+   peer, you have to consider the possibility that the peer has rejected
+   the article.  Alternatively, it's possible that the peer has some
+   misconfiguration like the ones described above.
+
+   In either case, if you're sure that the article was offered to the peer
+   and not spooled, you will need the assistance of the peer's admin to
+   investigate further.  INN does not generally log enough information
+   about outgoing articles to be able to tell more from your server alone.
+
+   It may be possible to get a slight bit of information from the remote
+   server by connecting with telnet (usually to port 119) and issuing
+   "IHAVE <message-id>".  The peer may respond with something like "435
+   Duplicate" which means that the problem is not likely to be with your
+   server (it may be still a problem with the article itself).  If the
+   peer responds with something like "335", your server probably did not
+   offer the article after all.
+
+   If you really are at a dead end and need to get more information about
+   what's going on with an outgoing feed, you can switch it from innfeed
+   to nntpsend (see INSTALL for instructions).  You can then run it
+   manually with innxmit -dv, which will show the full conversation with
+   your remote peer.
 
 ------------------------------
 
@@ -1189,7 +1265,7 @@ header effective in the actual posted article.
 
 ------------------------------
 
-Subject: 6.11. Run innd and nnrpd on separate ports
+Subject: 6.12. Run innd and nnrpd on separate ports
 
 Originally, innd was designed to handle all incoming connections and hand
 them off to nnrpd as appropriate.  It is, however, becoming increasingly
@@ -1214,3 +1290,48 @@ You should now set up nnrpd to run via of xinetd, inetd, tcpserver, or
 some other similar network connection handling daemon on port 119.  Make
 sure that nnrpd is run as the news user, not as root.  You don't have to
 pass any arguments to nnrpd (unless you want to).
+
+------------------------------
+
+Subject: 6.13. Back up and restore an INN installation
+
+(This entry is based on a post by Jeffrey M. Vinocur.)
+
+For a full backup, you need, at a minimum, to save all of the articles in
+$patharticles, the configuration files in $pathetc, and the active and
+newsgroup files in $pathdb.  If you have any custom filters you've
+installed, or a cleanfeed.local file, you'll want to keep that, as well as
+any custom authentication programs or files you're using (like a password
+file for news accounts).  You may also want to save HTML versions of the
+news.daily reports, if you've been generating them, and you may want to
+look at the first few lines of config.status in your original source tree
+so that you can be sure to use the same options to configure.
+
+Note that most people only back up those portions of the news spool that
+they retain for a long time (like local hierarchies) and don't bother with
+all the regular Usenet articles.
+
+It's considerably easier to back up and restore articles from tradspool
+than any other storage mechanism, and it's quite hard to back up and
+restore timecaf or CNFS.  Remember that you can use different storage
+methods for different articles.  I highly recommend saving the hierarchies
+you want to back up in tradspool and use the higher-performance storage
+mechanisms for news you don't care as much about.
+
+To restore a single newsgroup using tradspool and the tradindexed overview
+method, you can just restore the articles into the news spool and then
+rebuild overview for just that group with tdx-util -R.
+
+Otherwise, for more general restorations, compile INN on the new system
+with the same ./configure command if you've lost the installation, run
+make install, then put all the pieces back where they belong.  Now, you
+have to run:
+
+    makehistory -O
+
+to rebuild the history and overview databases.  When that finishes, cd to
+the $pathdb directory and run:
+
+    makedbz -s `wc -l history` -o
+
+You should now be able to start the server and read and post news to it.
