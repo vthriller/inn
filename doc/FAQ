@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.34 2003-01-01 06:27:52 eagle Exp $
+$Id: FAQ,v 1.35 2003-02-01 00:57:18 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -80,6 +80,7 @@ Subject: Contents
     6.6.  Change the domain used for message IDs
     6.7.  Use INN without a direct news feed
     6.8.  Generate MRTG graphs for INN
+    6.9.  Hide the junk and control groups from users
 
 ------------------------------
 
@@ -1203,3 +1204,24 @@ This sample configuration is from Basil Kruglov.
 I'm not aware of any packaged solutions for generating MRTG data from
 other things, such as incoming or outcoming news flows.  If anyone has any
 pointers, let me know.
+
+------------------------------
+
+Subject: 6.9. Hide the junk and control groups from users
+
+The junk, control, and control.cancel groups must exist in the active file
+for the proper operation of INN, so you can't remove the groups entirely.
+You can, however, hide them completely from users.
+
+To do this, edit readers.conf, and for each user access group where you
+want to hide the junk and control groups, add "!junk,!control,!control.*"
+to the access pattern.  In other words, if you have a line like:
+
+    access: *
+
+just change that to:
+
+    access: *,!junk,!control,!control.*
+
+The groups will then no longer show up on the server for users to which
+that access group applies; it will be as if they do not exist.
