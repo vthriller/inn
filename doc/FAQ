@@ -1,4 +1,4 @@
-$Id: FAQ,v 0.6 2000-08-21 07:10:54 eagle Exp $
+$Id: FAQ,v 1.0 2000-10-08 21:27:59 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -490,10 +490,10 @@ If deferrals are disabled, INN will refuse the article from the second
 peer, which means there's a possibility you'll lose news if the first peer
 dies before sending you the article.
 
-As a side note, some versions of Diablo, upon receiving a deferral, turns
-around and immediately sends the article via TAKETHIS, which is basically
-exactly what you don't want.  (Chances are extremely high in practice that
-the first peer will come through with the article.)
+As a side note, some older versions of Diablo, upon receiving a deferral,
+turn around and immediately send the article via TAKETHIS, which is
+basically exactly what you don't want.  (Chances are extremely high in
+practice that the first peer will come through with the article.)
 
 ------------------------------
 
