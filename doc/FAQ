@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.35 2003-02-01 00:57:18 eagle Exp $
+$Id: FAQ,v 1.36 2003-03-03 03:23:51 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -13,8 +13,7 @@ Posting-frequency: monthly
 This FAQ is intended to answer frequently asked questions concerning the
 current versions of INN (INN 2.x and later) seen on news.software.nntp.
 It should be referred to in preference to the old INN FAQ, which only
-documents versions up to 1.7.  It is very much a work in progress, and is
-currently still woefully incomplete.
+documents versions up to 1.7.
 
 If you're reading this on Usenet, this FAQ is formatted as a minimal
 digest, so if your news or mail reader has digest handling capabilities
@@ -81,6 +80,7 @@ Subject: Contents
     6.7.  Use INN without a direct news feed
     6.8.  Generate MRTG graphs for INN
     6.9.  Hide the junk and control groups from users
+    6.10. Modify the body of posts made through my server
 
 ------------------------------
 
@@ -1225,3 +1225,30 @@ just change that to:
 
 The groups will then no longer show up on the server for users to which
 that access group applies; it will be as if they do not exist.
+
+------------------------------
+
+Subject: 6.10. Modify the body of posts made through my server
+
+You can't without either making code changes to INN or putting your own
+software in the path of incoming posts.  This is intentional.
+
+Some sites like to try to append a standard signature to all posts through
+their service, generally as advertising.  This creates the appearance of
+users saying things that they didn't, runs the risk of corrupting messages
+by appending text without regard to what's in the message, and can
+possibly modify messages that arrive via a suck/rpost connection.  It also
+adds advertising in an obnoxious location, rather than in the Organization
+header which is more widely used for that purpose.  Accordingly, INN does
+not support this, or any other modification of the body of a message from
+inside the news server.
+
+If you only want to do this for a private hierarchy, the easiest way to do
+this (as well as any other modifications and internal filtering that you
+want to perform) is to mark all of the groups as moderated and route all
+submissions through a script that makes whatever modifications you want
+and then posts the messages with an Approved header.
+
+If you want to do this in order to advertise your service, please
+reconsider.  You can add your advertisements to the headers, like many
+other news service providers.
