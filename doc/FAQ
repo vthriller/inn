@@ -1,4 +1,4 @@
-$Id: FAQ,v 0.1 1999-10-18 11:21:52 eagle Exp $
+$Id: FAQ,v 0.2 1999-10-18 11:37:11 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -190,42 +190,37 @@ patience (and a good killfile).
 
 Subject: 1.6. What mailing lists are there for INN?
 
-INN's README says:
+There are several INN-related mailing lists:
 
-    There are various INN-related mailing lists you can join or send
-    messages to if you like.  Some of them you must be a member of before
-    you can send mail to them (thank the Spam gods for that policy), and
-    two of them are read-only (no postings allowed).
+inn-announce@isc.org
+    Where announcements about INN are set (no posting allowed).
 
-      inn-announce@isc.org
-        Where announcements about INN are set (no posting allowed).
+inn-workers@isc.org
+    Discussion of INN development (postings by members only).
 
-      inn-workers@isc.org
-        Discussion of INN development (postings by members only).
+inn-patches@isc.org
+    Where to send patches for consideration for inclusion into INN (open
+    posting).
 
-      inn-patches@isc.org
-        Where to send patches for consideration for inclusion into INN
-        (open posting).
+inn-committers@isc.org
+    CVS commit messages for INN are sent to this list (no posting
+    allowed).
 
-      inn-committers@isc.org
-        CVS commit messages for INN are sent to this list (no posting
-        allowed).
+inn-bugs@isc.org
+    Where to send bug reports (open posting).  If you're an INN expert and
+    have the time to help out other users, we encourage you to join this
+    mailing list to answer questions.  (You may also want to read the
+    newsgroup news.software.nntp, which gets a lot of INN-related
+    questions.)
 
-      inn-bugs@isc.org
-        Where to send bug reports (open posting).  If you're an INN expert
-        and have the time to help out other users, we encourage you to
-        join this mailing list to answer questions.  (You may also want to
-        read the newsgroup news.software.nntp, which gets a lot of
-        INN-related questions.)
+To join these lists, send a subscription request to the `-request'
+address.  The addresses for the above lists are:
 
-    To join these lists, send a subscription request to the `-request'
-    address.  The addresses for the above lists are:
-
-       inn-workers-request@isc.org
-       inn-patches-request@isc.org
-       inn-committers-request@isc.org
-       inn-bugs-request@isc.org
-       inn-announce-request@isc.org
+    inn-workers-request@isc.org
+    inn-patches-request@isc.org
+    inn-committers-request@isc.org
+    inn-bugs-request@isc.org
+    inn-announce-request@isc.org
 
 inn-workers tends to be moderate volume (3-5 messages a day, but varying a
 lot depending on what's being discussed).  inn-committers is higher volume
