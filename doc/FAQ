@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.49 2004-04-07 06:49:49 eagle Exp $
+$Id: FAQ,v 1.50 2004-04-12 19:45:30 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1105,13 +1105,15 @@ where the overview.sh script is:
 
     #!/bin/sh
     echo "100"
-    /usr/local/news/bin/inndf -n | awk '{print $1}'
+    /usr/local/news/bin/inndf -o | awk '{print $1}'
     echo "0"
     echo "overview"
 
-This sample configuration is from Basil Kruglov.  Note that you can use
-either -n (for total count of articles) or -o (for percentage free space)
-depending on what you would like to graph.
+This sample configuration is from Basil Kruglov.  Note that you can
+instead use -n (for total count of articles); in that case, you'll want to
+remove the MaxBytes setting above or change it to be some sensible limit
+on the total number of articles you receive.  You'll also want to change a
+few of the other labels in the MRTG configuration.
 
 I'm not aware of any packaged solutions for generating MRTG data from
 other things, such as incoming or outcoming news flows.  If anyone has any
