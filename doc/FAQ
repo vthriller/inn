@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.39 2003-05-10 18:57:07 eagle Exp $
+$Id: FAQ,v 1.40 2003-05-17 15:59:18 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1222,16 +1222,18 @@ You can, however, hide them completely from users.
 
 To do this, edit readers.conf, and for each user access group where you
 want to hide the junk and control groups, add "!junk,!control,!control.*"
-to the access pattern.  In other words, if you have a line like:
+to the newsgroups pattern.  In other words, if you have a line like:
 
-    access: *
+    newsgroups: *
 
 just change that to:
 
-    access: *,!junk,!control,!control.*
+    newsgroups: *,!junk,!control,!control.*
 
-The groups will then no longer show up on the server for users to which
-that access group applies; it will be as if they do not exist.
+If you use read and post patterns instead, do the same for each of them
+individually.  The groups will then no longer show up on the server for
+users to which that access group applies; it will be as if they do not
+exist.
 
 ------------------------------
 
