@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.44 2003-09-15 07:04:03 eagle Exp $
+$Id: FAQ,v 1.45 2003-09-15 07:15:42 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -59,6 +59,7 @@ Subject: Contents
     3.3.  The news server isn't keeping up with incoming news
     3.4.  news.notice is empty and the nightly report is missing things
     3.5.  INN is running out of file descriptors
+    3.6.  Can't get debugging information out of INN
 
 4.  Error Messages
     4.1.  innd: SERVER cant store article
@@ -560,6 +561,41 @@ You may need to increase your system file descriptor limits.  See the
 "File Descriptor Limits" section of INSTALL for more details.  This is
 particularly a concern on Solaris systems, since Solaris by default has an
 exceptionally low file descriptor limit.
+
+------------------------------
+
+Subject: 3.6. Can't get debugging information out of INN
+
+The INN startup process is quite complicated, involving the rc.news shell
+script and the setuid inndstart wrapper.  This can make it rather
+difficult to get enough debugging information out of it to determine
+what's going wrong if it's crashing immediately after startup or otherwise
+having serious difficulties.
+
+One approach is to run innd by hand directly, giving it the -d option.
+This requires setting up a configuration where innd doesn't need to bind
+to privileged ports, however.
+
+Another, sometimes better option, is move the innd binary to another name,
+like innd-real, and put a shell script in its place.  Here's an example,
+from Kai Henningsen:
+
+    #! /bin/bash
+    # allow core dumps
+    ulimit -c unlimited
+    # save any output
+    exec > /tmp/innd.log 2>&1
+    # who are we running as, anyway?
+    id
+    # show exported environment
+    export
+    # start innd (don't forget the arguments, or it will complain)
+    exec strace -o /tmp/innd.strace -f -F /path/to/innd-orig "$@"
+
+This starts innd under strace, suitable for debugging startup core dumps
+and the like.  You can use this as a general model for a variety of
+debugging; for example, you could replace the strace invocation with an
+invocation of gdb and then start innd from inside gdb with the -d option.
 
 ------------------------------
 
