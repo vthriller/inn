@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.15 2002-03-28 21:01:01 eagle Exp $
+$Id: FAQ,v 1.16 2002-04-09 05:11:33 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -363,7 +363,7 @@ INN's INSTALL file expands on this:
     retention times.
 
     Disadvantages:  Takes a very fast file system and I/O system to keep
-    up with current Usenet traffic volues due to file system overhead.
+    up with current Usenet traffic volumes due to file system overhead.
     Groups with heavy traffic tend to create a bottleneck because of
     inefficiencies in storing large numbers of article files in a single
     directory.  Requires a nightly expire program to delete old articles
