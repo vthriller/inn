@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.42 2003-09-08 04:33:12 eagle Exp $
+$Id: FAQ,v 1.43 2003-09-08 04:54:53 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -81,6 +81,7 @@ Subject: Contents
     6.8.  Generate MRTG graphs for INN
     6.9.  Hide the junk and control groups from users
     6.10. Modify the body of posts made through my server
+    6.11. Hide the X-Trace header
 
 ------------------------------
 
@@ -1267,3 +1268,20 @@ and then posts the messages with an Approved header.
 If you want to do this in order to advertise your service, please
 reconsider.  You can add your advertisements to the headers, like many
 other news service providers.
+
+------------------------------
+
+Subject: 6.11. Hide the X-Trace header
+
+There is no built-in support for suppressing generation of the X-Trace
+header.  You can, however, remove it from inside a Perl posting filter.
+Try using a posting filter like this:
+
+    sub filter_post {
+        $modify_headers = 1;
+        delete $hdr{'X-Trace'};
+        return '';
+    }
+
+Note that you have to set $modify_headers to make changes to the article
+header effective in the actual posted article.
