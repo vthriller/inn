@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.48 2004-04-07 02:59:47 eagle Exp $
+$Id: FAQ,v 1.49 2004-04-07 06:49:49 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1109,7 +1109,9 @@ where the overview.sh script is:
     echo "0"
     echo "overview"
 
-This sample configuration is from Basil Kruglov.
+This sample configuration is from Basil Kruglov.  Note that you can use
+either -n (for total count of articles) or -o (for percentage free space)
+depending on what you would like to graph.
 
 I'm not aware of any packaged solutions for generating MRTG data from
 other things, such as incoming or outcoming news flows.  If anyone has any
