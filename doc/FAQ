@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.19 2002-06-22 04:23:37 eagle Exp $
+$Id: FAQ,v 1.20 2002-08-11 01:51:40 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -68,6 +68,7 @@ Subject: Contents
     4.1.  innd: SERVER cant store article
     4.2.  innd: SERVER internal no control and/or junk group
     4.3.  Modification of read-only value attempted (Cleanfeed)
+    4.4.  tradspool: could not open ... File exists
 
 5.  Problems on Specific Systems
     5.1.  INN won't compile on SCO OpenServer
@@ -877,6 +878,55 @@ and change it to:
 
 The __LINES__ hash value is set internally by all recent versions of INN
 and is guaranteed to be correct.
+
+------------------------------
+
+Subject: 4.4. tradspool: could not open ... File exists
+
+This error generally happens after a crash or unclean shutdown of innd
+using the tradspool storage method, and is caused by overview information
+being out of sync with what articles are in the spool.  When innd was
+restarted, it renumbered its active file (which determines the range of
+existing articles in each group and therefore what article number is
+assigned to new articles) based on the overview information.  If there are
+newer articles already on disk that aren't mentioned in the overview
+(because the overview information for those articles hasn't been flushed
+to disk yet), new incoming articles will get assigned the same number as
+the existing article and then innd will fail to store the article and
+throttle with this error.
+
+One way to correct this error is to rebuild the entire overview database
+with:
+
+    makehistory -O -x -F
+
+but this takes a long time and is to some degree overkill.  A better
+solution in some cases is to just remove all articles in the spool that
+have higher numbers than the numbers in the active file.
+
+Here's a Perl script that will do that.  Just save this to a file, make it
+executable, and run it, giving it the path to the active file as the first
+argument and the path to the top of your tradspool news spool as the
+second argument:
+
+    #!/usr/bin/perl
+    die "Usage: <name> <active> <spool-path>\n" unless @ARGV == 2;
+    open (ACTIVE, $ARGV[0]) or die "Can't open $ARGV[0]: $!\n";
+    while (<ACTIVE>) {
+        my ($group, $hi, $lo, $flag) = split;
+        my $directory = $group;
+        $directory =~ tr%.%/%;
+        $directory = $ARGV[1] . '/' . $directory;
+        opendir (DIR, $directory) or die "Can't open $directory: $!\n";
+        while (defined ($_ = readdir DIR)) {
+            unlink "$directory/$_" if ($_ > $hi);
+        }
+        closedir DIR;
+    }
+
+INN 2.4 is expected to have better recovery tools to deal with problems
+like this, and to be less vulnerable to losing overview information in
+system crashes.
 
 ------------------------------
 
