@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.38 2003-05-05 18:20:22 eagle Exp $
+$Id: FAQ,v 1.39 2003-05-10 18:57:07 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -122,7 +122,7 @@ beginner's introduction, see the news.newusers.questions home page at
 
 Subject: 1.2. What is the current version?
 
-The most recently released version of INN is 2.3.4.
+The most recently released version of INN is 2.4.0.
 
 INN development proceeds in two branches, as with many other free software
 projects.  The STABLE branch is maintenance of the most recently released
@@ -133,11 +133,10 @@ As mentioned in the next section, when installing a new INN server, you
 may wish to download the latest snapshot of the STABLE branch rather than
 the current full release.
 
-Note that the previous STABLE series for INN 2.2 terminated in the release
-of INN 2.2.3 and current STABLE snapshots are based on INN 2.3.4.  You
-therefore cannot update from a STABLE snapshot before August 20th, 2000,
-to one dated after that without following the upgrade instructions in
-NEWS.
+Note that the previous STABLE series for INN 2.3 terminated in the release
+of INN 2.3.5 and current STABLE snapshots are based on INN 2.4.0.  You
+should therefore read the upgrade instructions in NEWS when upgrading from
+a STABLE snapshot before May 11th, 2003 to one dated after that.
 
 ------------------------------
 
@@ -484,7 +483,7 @@ daemon would have to find all of those articles and scan them to build the
 information.  It's also inefficient, since the overview information for a
 particular group will generally be requested many times by different
 clients.  INN therefore normally pregenerates overview information for all
-articles it stores; in versions of INN up to 2.2.1, this is done via a
+articles it stores; in versions of INN up to 2.2, this is done via a
 program called overchan and a special "outgoing feed" to that program
 specified in the newsfeeds configuration file.
 
@@ -558,8 +557,8 @@ before innd will start.
 
 Subject: 3.2. Reader performance is extremely slow using the storage API
 
-Try upgrading to INN 2.3.  Under INN 2.3, overview operations use a
-standard API that allows you to select the overview storage method that
+Try upgrading to INN 2.3 or later.  Under INN 2.3, overview operations use
+a standard API that allows you to select the overview storage method that
 best suits your situation, and there are three new overview mechanisms
 provided.  One, buffindexed, supports fast writing but with considerably
 faster reader performance than the old unified overview mechanism in INN
