@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.55 2004-12-23 22:19:58 eagle Exp $
+$Id: FAQ,v 1.56 2005-10-09 05:30:02 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -73,6 +73,7 @@ Subject: Contents
     5.1.  INN won't compile on SCO OpenServer / UnixWare / OpenUNIX
     5.2.  Using raw devices on Solaris destroys the partition table
     5.3.  Will INN run on Windows?
+    5.4.  Why aren't INN's files where the documentation says they are?
 
 6.  How Do I...
     6.1.  Set up a server with no external feeds, just local groups
@@ -931,6 +932,81 @@ environment for Windows).  For more information, see:
     <http://members.verizon.net/~vze4y7p6/inn/>
 
 Don't forget to peruse INSTALL if you download and want to try this.
+
+------------------------------
+
+Subject: 5.4. Why aren't INN's files where the documentation says they are?
+
+INN's default installation locations are intended to be convenient for
+sysadmins adding INN to their system without disturbing other software.
+They don't match any of the standards used by various Linux distributions
+or other Unix packaging systems.  Because of that, distributors who supply
+INN packages often rearrange the files and directories.
+
+Unfortunately, this is very confusing for system administrators, because
+the documentation is not updated to reflect the modified locations of
+files.
+
+You can always get the details of how your system is configured by looking
+in inn.conf at "pathnews" and similar parameters.  But for convenience,
+here are comparisons of INN's default locations with some of the most
+common packages.
+
+(Data courtesy of John F. Morse.)
+
+               DEFAULT                          DEBIAN
+pathnews:      /usr/local/news                  /usr/lib/news
+pathbin:       /usr/local/news/bin              /usr/lib/news/bin
+pathcontrol:   /usr/local/news/bin/control      /usr/lib/news/bin/control
+pathdb:        /usr/local/news/db               /var/lib/news
+pathetc:       /usr/local/news/etc              /etc/news
+pathfilter:    /usr/local/news/bin/filter       /etc/news/filter
+pathhttp:      /usr/local/news/log              /var/log/news
+pathlog:       /usr/local/news/log              /var/log/news
+pathrun:       /usr/local/news/run              /var/run/news
+pathtmp:       /usr/local/news/tmp              /var/spool/news/incoming/tmp
+pathspool:     /usr/local/news/spool            /var/spool/news
+patharchive:   /usr/local/news/spool/archive    /var/spool/news/archive
+patharticles:  /usr/local/news/spool/articles   /var/spool/news/articles
+pathincoming:  /usr/local/news/spool/incoming   /var/spool/news/incoming
+pathoutgoing:  /usr/local/news/spool/outgoing   /var/spool/news/outgoing
+pathoverview:  /usr/local/news/spool/overview   /var/spool/news/overview
+
+               DEFAULT                          FEDORA
+pathnews:      /usr/local/news                  /usr/lib/news
+pathbin:       /usr/local/news/bin              /usr/lib/news/bin
+pathcontrol:   /usr/local/news/bin/control      /usr/lib/news/bin/control
+pathdb:        /usr/local/news/db               /var/lib/news
+pathetc:       /usr/local/news/etc              /etc/news
+pathfilter:    /usr/local/news/bin/filter       /usr/lib/news/bin/filter
+pathhttp:      /usr/local/news/log              /var/log/news
+pathlog:       /usr/local/news/log              /var/log/news
+pathrun:       /usr/local/news/run              /var/run/news
+pathtmp:       /usr/local/news/tmp              /var/lib/news/tmp
+pathspool:     /usr/local/news/spool            /var/spool/news
+patharchive:   /usr/local/news/spool/archive    /var/spool/news/archive
+patharticles:  /usr/local/news/spool/articles   /var/spool/news/articles
+pathincoming:  /usr/local/news/spool/incoming   /var/spool/news/incoming
+pathoutgoing:  /usr/local/news/spool/outgoing   /var/spool/news/outgoing
+pathoverview:  /usr/local/news/spool/overview   /var/spool/news/overview
+
+               DEFAULT                          MANDRAKE
+pathnews:      /usr/local/news                  /usr
+pathbin:       /usr/local/news/bin              /usr/bin
+pathcontrol:   /usr/local/news/bin/control      /usr/lib/news/bin/control
+pathdb:        /usr/local/news/db               /var/lib/news
+pathetc:       /usr/local/news/etc              /etc/news
+pathfilter:    /usr/local/news/bin/filter       /usr/lib/news/bin/filter
+pathhttp:      /usr/local/news/log              /var/log/news
+pathlog:       /usr/local/news/log              /var/log/news
+pathrun:       /usr/local/news/run              /var/run/news
+pathtmp:       /usr/local/news/tmp              /usr/tmp
+pathspool:     /usr/local/news/spool            /var/spool/news
+patharchive:   /usr/local/news/spool/archive    /var/spool/news/archive
+patharticles:  /usr/local/news/spool/articles   /var/spool/news/articles
+pathincoming:  /usr/local/news/spool/incoming   /var/spool/news/incoming
+pathoutgoing:  /usr/local/news/spool/outgoing   /var/spool/news/outgoing
+pathoverview:  /usr/local/news/spool/overview   /var/spool/news/overview
 
 ------------------------------
 
