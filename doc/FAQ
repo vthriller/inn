@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.56 2005-10-09 05:30:02 eagle Exp $
+$Id: FAQ,v 1.57 2005-10-12 21:36:02 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1007,6 +1007,13 @@ patharticles:  /usr/local/news/spool/articles   /var/spool/news/articles
 pathincoming:  /usr/local/news/spool/incoming   /var/spool/news/incoming
 pathoutgoing:  /usr/local/news/spool/outgoing   /var/spool/news/outgoing
 pathoverview:  /usr/local/news/spool/overview   /var/spool/news/overview
+
+In addition, the FreeBSD port uses the standard INN paths except that it
+puts logs in /var/log/news and pathtmp in /usr/local/news/spool/tmp.
+
+Most packages install INN's man pages into a system man directory
+(/usr/share/man or /usr/local/man) rather than into a separate man
+directory under news's home directory.
 
 ------------------------------
 
