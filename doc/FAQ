@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.58 2005-12-12 01:25:11 eagle Exp $
+$Id: FAQ,v 1.59 2006-03-21 18:18:34 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -134,7 +134,7 @@ beginner's introduction, see the news.newusers.questions home page at
 
 Subject: 1.2. What is the current version?
 
-The most recently released version of INN is 2.4.2.
+The most recently released version of INN is 2.4.3.
 
 INN development proceeds in two branches, as with many other free software
 projects.  The STABLE branch is maintenance of the most recently released
