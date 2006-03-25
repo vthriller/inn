@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.59 2006-03-21 18:18:34 eagle Exp $
+$Id: FAQ,v 1.60 2006-03-25 19:56:43 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -944,7 +944,7 @@ Not out of the box, however; the standard INN distribution doesn't build
 on Windows.  There is, however, a port to Cygwin (which is a Unix-like
 environment for Windows).  For more information, see:
 
-    <http://members.verizon.net/~vze4y7p6/inn/>
+    <http://homepage.mac.com/imeowbot/inn/>
 
 Don't forget to peruse INSTALL if you download and want to try this.
 
