@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.61 2007-07-16 01:11:33 eagle Exp $
+$Id: FAQ,v 1.62 2007-12-13 06:13:03 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -207,10 +207,6 @@ Finally, the following additional links may be useful:
 <http://web.inter.nl.net/users/Elena.Samsonova/unix/INN/v2.3/>
     Excellent introductory and overview documentation for INN 2.3 and
     later.
-
-<http://www.avalon.net/~hakehoe/inn/>
-    Information about the ovdb overview method and about running INN on
-    HP-UX.
 
 <http://www.aplawrence.com/Unixart/newsserver.html>
     A tutorial on setting up INN aimed at beginners using SCO Unix.  While
@@ -1232,10 +1228,9 @@ articles to another server using post rather than peer-to-peer commands
 does not come with INN (INN has a few utilities to do this on a small
 scale, but not really anything designed to handle a lot of groups or a lot
 of articles).  You will need an external package to do this.  The two most
-popular are suck and newsx.  The suck web site appears to be unavailable.
-You can get newsx from:
-
-    <http://www.kvaleberg.com/newsx.html>
+popular are suck and newsx; however, both sites appear to be unavailable
+as of thos writing.  You may be able to find a package in your local
+distribution or package repository.
 
 Note that current versions of INN refer to articles internally using a
 storage API token, not a path name, which is not always what suck or newsx
