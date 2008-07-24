@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.64 2008-07-13 21:09:11 eagle Exp $
+$Id: FAQ,v 1.65 2008-07-24 23:28:27 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1075,9 +1075,11 @@ Subject: 6.4. Feed all articles on a server to another server
 To feed all articles on an existing server to another one, regardless of
 how they're stored on the server, first tell the new server to accept
 articles regardless of how old they are (otherwise, INN will reject
-articles older than artcutoff in inn.conf):
+articles older than artcutoff in inn.conf) and disable your filtering:
 
     ctlinnd param c 0
+    ctlinnd perl n
+    ctlinnd python n
 
 You may also want to set xrefslave to true in inn.conf and then restart
 INN on the new server if you want to keep the same article numbers as you
