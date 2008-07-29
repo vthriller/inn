@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.65 2008-07-24 23:28:27 eagle Exp $
+$Id: FAQ,v 1.66 2008-07-29 21:13:46 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -1106,7 +1106,8 @@ new news server to which you're feeding the articles.
 When done, set xrefslave to false in inn.conf again if you changed it and
 then either restart INN on the new server (necessary if you changed
 xrefslave) or use another ctlinnd param command to set the cutoff value
-back to what's specified in inn.conf.
+back to what's specified in inn.conf and use ctlinnd perl and ctlinnd
+python to reactivate your filters.
 
 Please note that when using xrefslave, this method requires that all of
 the articles in your spool have Xref headers.  Current versions of INN
