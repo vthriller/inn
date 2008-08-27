@@ -1,4 +1,4 @@
-$Id: FAQ,v 1.66 2008-07-29 21:13:46 eagle Exp $
+$Id: FAQ,v 1.67 2008-08-27 21:48:02 eagle Exp $
 
 From: Russ Allbery <rra@stanford.edu>
 Subject: INN 2.x FAQ
@@ -829,11 +829,13 @@ second argument:
         next if ($hi == 0 and $lo <= 1);
         $directory =~ tr%.%/%;
         $directory = $ARGV[1] . '/' . $directory;
-        opendir (DIR, $directory) or die "Can't open $directory: $!\n";
-        while (defined ($_ = readdir DIR)) {
-            unlink "$directory/$_" if ($_ > $hi);
+        if (-d $directory) {
+            opendir (DIR, $directory) or die "Can't open $directory: $!\n";
+            while (defined ($_ = readdir DIR)) {
+                unlink "$directory/$_" if ($_ > $hi);
+            }
+            closedir DIR;
         }
-        closedir DIR;
     }
 
 If you're not already running INN 2.4, upgrade if you can.  Not only can
